@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.mapper.ErrorMapper">
+    <resultMap type="com.pojo.Error" id="baseMap">
+    	<id column="id" jdbcType="INTEGER" property="id"/>
+    	<result column="sp_no" jdbcType="VARCHAR" property="spNo"/>
+    	<result column="user_no" jdbcType="VARCHAR" property="userNo"/>
+    	<result column="time" jdbcType="TIMESTAMP" property="time"/>
+    	<result column="msg" jdbcType="VARCHAR" property="msg"/>
+    	<result column="ip" jdbcType="VARCHAR" property="ip"/>
+    	<result column="end" jdbcType="VARCHAR" property="end"/>
+    	<result column="stage" jdbcType="VARCHAR" property="stage"/>
+    	<result column="error_code" jdbcType="INTEGER" property="errorCode"/>
+    	<result column="remark" jdbcType="VARCHAR" property="remark"/>
+    	<result column="number" jdbcType="INTEGER" property="number"/>
+    </resultMap>
+    
+    <sql id="errorParam">
+    	sp_no,user_no,time,msg,ip,end,stage,remark,error_code,count(1) as number
+    </sql>
+    
+    <select id="selectSpByCode" parameterType="java.util.Map" resultMap="baseMap">
+    	select distinct sp_no from tb_error where error_code=#{errorCode} and time >= STR_TO_DATE(#{startTime},'%Y-%m-%d %H:%i:%s')
+    	and time <![CDATA[<=]]> STR_TO_DATE(#{endTime},'%Y-%m-%d %H:%i:%s')
+    </select>
+    
+    <select id="selectIpByCode" parameterType="java.util.Map" resultMap="baseMap">
+    	select distinct user_no from tb_error where error_code=#{errorCode}  and time >= STR_TO_DATE(#{startTime},'%Y-%m-%d %H:%i:%s')
+    	and time <![CDATA[<=]]> STR_TO_DATE(#{endTime},'%Y-%m-%d %H:%i:%s')
+    </select>
+    
+    <select id="selectEndByCode" parameterType="java.util.Map" resultMap="baseMap">
+    	select distinct end from tb_error where error_code=#{errorCode} and time >= STR_TO_DATE(#{startTime},'%Y-%m-%d %H:%i:%s')
+    	and time <![CDATA[<=]]> STR_TO_DATE(#{endTime},'%Y-%m-%d %H:%i:%s')
+    </select>
+    
+    <select id="selectByCode" parameterType="java.util.Map" resultMap="baseMap">
+    	select
+    	<include refid="errorParam"></include>
+    	from tb_error where error_code = #{errorCode} and time >= STR_TO_DATE(#{startTime},'%Y-%m-%d %H:%i:%s')
+    	and time <![CDATA[<=]]> STR_TO_DATE(#{endTime},'%Y-%m-%d %H:%i:%s') group by user_no
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+/*main-body css*/
+.top{
+	width:100%;
+	height:30px;
+	border-bottom:2px solid #ccc;
+}
+
+.left{
+	width:200px;
+	position:absolute;
+	top:50px;
+	left:5px;
+	bottom:0px;
+}
+
+.cotent{
+	position:absolute;
+	top:50px;
+	left:300px;
+}
+
+/***/
+.left ul li{
+	list-style:none;
+	width:170px;
+	border:1px solid #ccc;
+	border-radius:4px;
+}
+
+#frame{
+	width:300px;
+	min-height:300px;
+	height:auto!important;
+	height:300px;
+}

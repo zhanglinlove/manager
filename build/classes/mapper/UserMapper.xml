@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.mapper.UserMapper">
+
+	<resultMap type="com.pojo.UserBean" id="resultMap">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="username" jdbcType="VARCHAR" property="username"/>
+		<result column="password" jdbcType="VARCHAR" property="password"/>
+	</resultMap>
+	
+	<sql id="where_param">
+		<if test="username != null and username != '' ">
+			and username = #{username}
+		</if>
+		<if test="password != null and password != '' ">
+			and password = #{password}
+		</if>
+	</sql>
+	
+	<insert id="insertUser" parameterType="com.pojo.UserBean" useGeneratedKeys="true">
+		insert into tb_user(username,password) values (#{username},#{password})
+	</insert>
+	
+	<select id="selectUser" parameterType="com.pojo.UserBean" resultMap="resultMap">
+		select * from tb_user
+		<where>
+			<include refid="where_param"></include>
+		</where>
+	</select>
+</mapper>

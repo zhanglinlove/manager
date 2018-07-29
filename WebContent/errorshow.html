@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>信息展示页面</title>
+</head>
+<body>
+	
+	<div id="error_top">
+		
+	</div>
+	<div id="error_content">
+	
+	</div>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		function getParam(name) {
+			var reg = new RegExp('(^|&)' + name + '=([^$]*)($|&)');
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null)
+				return unescape(r[2]);
+			return null;
+		}
+		function getLocation(){
+			var href = window.location.href;
+			var path = window.location.pathname;
+			var pos = href.indexOf(path);
+			return href.substring(0,pos);
+		}
+		$(function(){
+			var code = getParam('errorCode');
+			getList(code);
+		})
+		
+		function getList(code){
+			var param = {
+					errorCode: code
+			};
+			$.ajax({
+				url: getLocation() + '/selectsp',
+				type: 'GET',
+				data: param,
+				dataType: 'json',
+				async: 'true',
+				error: function(XMLHttpRequest) {
+					alert(XMLHttpRequest.status + ';' + XMLHttpRequest.readyState);
+				},
+				success: function(data) {
+					if(data !== undefined || data !== null) {
+						var obj = eval(data);
+						alert('--' + obj);
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="consol" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%-5level][%date]--%msg--[%M][%F{16},%L]%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <appender name="outlog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/log/test/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+           <FileNamePattern>/log/test/access.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%-5level][%date]--%msg--[%M][%F{16},%L]%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <logger name="com" level="DEBUG"></logger>
+    
+    <root level="INFO">
+        <appender-ref ref="consol"/>
+        <appender-ref ref="outlog"/>
+    </root>
+</configuration>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.mapper.ProductInfoMapper">
+
+	<resultMap type="com.pojo.ProductInfoBean" id="resultMap">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="description" jdbcType="VARCHAR" property="description"/>
+		<result column="createTime" jdbcType="TIME" property="createtime"/>
+		<result column="baseprice" jdbcType="FLOAT" property="baseprice"/>
+		<result column="marketprice" jdbcType="FLOAT" property="marketprice"/>
+		<result column="sellprice" jdbcType="FLOAT" property="sellprice"/>
+		<result column="clickcount" jdbcType="INTEGER" property="clickcount"/>
+		<result column="sellCount" jdbcType="INTEGER" property="sellCount"/>
+		<result column="categoryid" jdbcType="INTEGER" property="categoryid"/>
+	</resultMap>
+	<resultMap type="com.pojo.CartBean" id="cartMap">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="sellprice" jdbcType="FLOAT" property="price"/>
+		<result column="num" jdbcType="INTEGER" property="num"/>
+	</resultMap>
+	
+	<select id="selectById" parameterType="int" resultMap="resultMap">
+		select * from tb_productinfo where id = #{id}
+	</select>
+	
+	<select id="selectCartById" parameterType="int" resultMap="cartMap">
+		select id,name,sellprice,count(1) as num from tb_productinfo where id = #{id}
+	</select>
+	<select id="selectBySql" parameterType="String" resultMap="resultMap" statementType="STATEMENT">
+		${value}
+	</select>
+	
+	<select id="selectByCommend" resultMap="resultMap">
+		select * from tb_productinfo order by commend desc limit 3
+	</select>
+	
+	<select id="selectByClickCount" resultMap="resultMap">
+		select * from tb_productinfo order by clickcount desc limit 5
+	</select>
+	
+	<select id="selectBySellCount" resultMap="resultMap">
+		select * from tb_productinfo order by sellCount desc limit 2
+	</select>
+	
+	<select id="selectByName" parameterType="com.pojo.ProductInfoBean" resultMap="resultMap">
+		select * from tb_productinfo where name like CONCAT('%',#{name},'%')
+	</select>
+	
+	
+	<update id="updateById" parameterType="com.pojo.ProductInfoBean">
+		update tb_productinfo set name = #{name} , description = #{description},
+			baseprice = #{baseprice},marketprice = #{marketprice},sellprice=#{sellprice}
+			 where id = #{id}
+	</update>
+	
+	<insert id="insertShop" parameterType="com.pojo.ProductInfoBean" useGeneratedKeys="true">
+		insert into tb_productinfo(name,description,baseprice,marketprice,sellprice,categoryid)
+		values(#{name},#{description},#{baseprice},#{marketprice},#{sellprice},#{categoryid})
+	</insert>
+</mapper>

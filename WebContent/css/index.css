@@ -1,0 +1,17 @@
+*{
+	margin:20px 30px;
+}
+.leftContent{
+	position:absolute;
+	left:40px;
+	top:40px;
+	width:120px;
+	height:auto;
+}
+
+.rightContent{
+	position:absolute;
+	left:165px;
+	right:0px;
+	top:40px;
+}

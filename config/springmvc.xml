@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+     <context:component-scan base-package="com" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+     </context:component-scan>
+     <mvc:annotation-driven>
+        <mvc:message-converters>
+            <ref bean="jackson2HttpMessageConverter"/>
+            <ref bean="stringHttpMessageConverter"/>
+        </mvc:message-converters>
+     </mvc:annotation-driven>
+     
+     <mvc:default-servlet-handler/>
+     
+     <mvc:resources location="/js/" mapping="/js/**"/>
+     <mvc:resources location="/page/" mapping="/pag/**"/>
+     
+     
+     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+     
+     <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>text/plain;charset=UTF-8</value>
+                <value>application/xml;charset=UTF-8</value>
+                <value>text/xml;charset=UTF-8</value>
+            </list>
+        </property>
+     </bean>
+     
+     <bean id="jackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+     </bean>
+</beans>

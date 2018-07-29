@@ -1,0 +1,8 @@
+[[id, name, description, createTime, baseprice, marketprice, sellprice, clickcount, sellCount],
+ 
+[1, 矿泉水, null, 2016-05-23 14:23:34.0, 0.5, 1.0, 1.0, null, null, 1]]
+
+select distinct user_no from tb_error 
+where error_code= 5309
+and time >= STR_TO_DATE('2016-09-04 00:00:00','%Y-%m-%d %H:%i:%s') 
+and time <= STR_TO_DATE('2016-09-04 21:44:16','%Y-%m-%d %H:%i:%s')
